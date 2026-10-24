@@ -15,6 +15,7 @@ export function autoroute(soup: AnySoupElement[]): SolutionWithDebugInfo {
     input,
     connMap,
     isRemovePathLoopsEnabled: true,
+    isShortenPathWithShortcutsEnabled: true,
     optimizeWithGoalBoxes: true,
   })
 

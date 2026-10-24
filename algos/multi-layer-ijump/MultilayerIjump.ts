@@ -237,6 +237,14 @@ export class MultilayerIjump extends GeneralizedAstarAutorouter {
   }
 
   getNodeName(node: Node3d): string {
+    if (
+      node.parent &&
+      node.l === (node.parent as Node3d).l &&
+      manDist(node, node.parent) > 1e-6 &&
+      nodeName(node, this.GRID_STEP) === nodeName(node.parent, this.GRID_STEP)
+    ) {
+      return `${nodeName(node, this.GRID_STEP / 100)}-${node.l ?? 0}`
+    }
     return `${nodeName(node, this.GRID_STEP)}-${node.l ?? 0}`
   }
 
@@ -528,6 +536,7 @@ export class MultilayerIjump extends GeneralizedAstarAutorouter {
       x: node.x + dir.dx * dir.travelDistance,
       y: node.y + dir.dy * dir.travelDistance,
       l: node.l + dir.dl,
+      parent: node,
       obstacleHit: dir.obstacle,
       travelMarginCostFactor: dir.travelMarginCostFactor,
       enterMarginCost: dir.enterMarginCost,
